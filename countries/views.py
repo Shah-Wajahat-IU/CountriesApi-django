@@ -10,6 +10,7 @@ from countries.serializers import CountriesSerializer
 from rest_framework.decorators import api_view
 # Create your views here.
 
+#Create Fet and post Request of all data
 
 @api_view(['GET','POST'])
 def countries_list(request):
@@ -30,6 +31,8 @@ def countries_list(request):
             countires_serializer.save()
             return JsonResponse(countires_serializer.data,status=status.HTTP_201_CREATED)
         return JsonResponse(countires_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+#Create GET,PUT AND DELETE Single Data
 
 @api_view(["GET","PUT","DELETE"])
 def countries_detail(request,pk):
