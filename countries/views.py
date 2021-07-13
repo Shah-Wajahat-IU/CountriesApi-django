@@ -22,7 +22,7 @@ def countries_list(request):
             countires=countires.filter(name__icontains=name)
 
         countires_serializer= CountriesSerializer(countires,many=True)
-        return JSONParser(countires_serializer.data,safe=True)
+        return JsonResponse(countires_serializer.data,safe=False)
 
     elif request.method == 'POST':
         countires_data=JSONParser().parse(request)
@@ -44,7 +44,7 @@ def countries_detail(request,pk):
         countries_serializer=CountriesSerializer(countries)
         return JsonResponse(countries_serializer.data,status=status.HTTP_200_OK)
     elif request.method=="PUT":
-        countries_data=JSONParser.parse(request)
+        countries_data=JSONParser().parse(request)
         countries_serializer=CountriesSerializer(countries,data=countries_data)
         if countries_serializer.is_valid():
             countries_serializer.save()
@@ -52,4 +52,4 @@ def countries_detail(request,pk):
         return JsonResponse(countries_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     elif request.method == "DELETE":
         countries.delete()
-        return JSONParser({"message":"Country was deleted succesfully"},status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({"message":"Country was deleted succesfully"},status=status.HTTP_204_NO_CONTENT)
